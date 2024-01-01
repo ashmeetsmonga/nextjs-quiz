@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { options } from "./quiz.constants";
 import Option from "./components/Option";
+import Timer from "./components/Timer";
 
 const Quiz = () => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
@@ -15,8 +16,9 @@ const Quiz = () => {
             <Option key={idx} name={option} isSelected={selectedAnswer === option} setSelectedAnswer={setSelectedAnswer} />
           ))}
         </div>
-        <div className="w-full flex justify-center mt-20">
+        <div className="relative w-full flex justify-center mt-20">
           <button className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange  hover:text-themeLight hover:scale-110 transition-all ">Submit</button>
+          <Timer />
         </div>
       </div>
     </div>
