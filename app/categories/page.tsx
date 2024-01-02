@@ -10,7 +10,7 @@ const Categories = () => {
         <h1 className="text-4xl font-bold text-themeDark">Select Category</h1>
         <div className="grid grid-cols-4 gap-8 w-full">
           {categories.map((category, idx) => (
-            <Link key={idx} href="/quiz">
+            <Link key={idx} href="/details">
               <Category name={category.name} image={category.image} />
             </Link>
           ))}

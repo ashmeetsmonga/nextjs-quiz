@@ -4,9 +4,16 @@ import { DURATION } from "../quiz.constants";
 
 const Timer = () => {
   const [duration, setDuration] = useState(DURATION);
+  const [isTimeExpired, setIsTimeExpired] = useState(false);
+
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setDuration((prev) => (prev === 0 ? prev : prev - 10));
+      setDuration((prev) => {
+        if (!prev) {
+          setIsTimeExpired(true);
+          return prev;
+        } else return prev - 10;
+      });
     }, 10);
     return () => window.clearInterval(interval);
   }, []);
