@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import QuizDetailsContextProvider from "@/context/QuizDetailsContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -15,7 +16,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <QuizDetailsContextProvider>{children}</QuizDetailsContextProvider>
+      </body>
     </html>
   );
 }

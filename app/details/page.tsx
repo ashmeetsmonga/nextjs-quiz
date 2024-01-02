@@ -1,8 +1,12 @@
+"use client";
+import { useQuizDetailsContext } from "@/context/QuizDetailsContext";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const Details = () => {
+  const { category, difficulty, setDifficulty, noOfQuestions, setNoOfQuestions } = useQuizDetailsContext();
+
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="w-1/4 flex flex-col gap-14 bg-themeLight p-10 rounded-lg">
@@ -10,19 +14,27 @@ const Details = () => {
         <div className="flex flex-col gap-7">
           <div className="flex gap-3 flex-col">
             <p className="text-themeDark text-2xl font-bold">Category</p>
-            <p className="text-themeOrange text-xl font-bold">Mythology</p>
+            <p className="text-themeOrange text-xl font-bold">{category}</p>
           </div>
           <div className="flex flex-col gap-3">
             <p className="text-themeDark text-2xl font-bold">Difficulty</p>
-            <select className="text-themeOrange text-xl font-semibold outline-none border-none bg-white py-2 px-4 rounded-xl appearance-none cursor-pointer">
-              <option>Easy</option>
-              <option>Medium</option>
-              <option>Hard</option>
+            <select
+              value={difficulty}
+              onChange={(e) => setDifficulty(e.target.value)}
+              className="text-themeOrange text-xl font-semibold outline-none border-none bg-white py-2 px-4 rounded-xl appearance-none cursor-pointer"
+            >
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
             </select>
           </div>
           <div className="flex flex-col gap-3">
             <p className="text-themeDark text-2xl font-bold">No Of Questions</p>
-            <select className="text-themeOrange text-xl font-semibold outline-none border-none bg-white py-2 px-4 rounded-xl appearance-none cursor-pointer">
+            <select
+              value={noOfQuestions}
+              onChange={(e) => setNoOfQuestions(parseInt(e.target.value))}
+              className="text-themeOrange text-xl font-semibold outline-none border-none bg-white py-2 px-4 rounded-xl appearance-none cursor-pointer"
+            >
               <option>5</option>
               <option>10</option>
               <option>15</option>
