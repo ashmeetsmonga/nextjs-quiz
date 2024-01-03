@@ -22,7 +22,7 @@ const Details = () => {
         <div className="flex flex-col gap-7">
           <div className="flex gap-3 flex-col">
             <p className="text-themeDark text-2xl font-bold">Category</p>
-            <p className="text-themeOrange text-xl font-bold">{category}</p>
+            <p className="text-themeOrange text-xl font-bold capitalize">{category}</p>
           </div>
           <div className="flex flex-col gap-3">
             <p className="text-themeDark text-2xl font-bold">Difficulty</p>
@@ -43,10 +43,10 @@ const Details = () => {
               onChange={(e) => setNoOfQuestions(parseInt(e.target.value))}
               className="text-themeOrange text-xl font-semibold outline-none border-none bg-white py-2 px-4 rounded-xl appearance-none cursor-pointer"
             >
-              <option>5</option>
               <option>10</option>
+              {/* <option>10</option>
               <option>15</option>
-              <option>20</option>
+              <option>20</option> */}
             </select>
           </div>
         </div>
