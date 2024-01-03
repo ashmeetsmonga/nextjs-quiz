@@ -1,3 +1,5 @@
-export const options = ["Centaur", "Minotaur", "Pegasus", "Gorgon"];
-
 export const DURATION = 10000;
+
+export const categoryIdMap = {
+  mythology: 20,
+};

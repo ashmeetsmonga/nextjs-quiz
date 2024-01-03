@@ -1,50 +1,50 @@
 export const categories = [
   {
-    name: "Mythology",
+    name: "mythology",
     image: "/assets/images/mythology.jpg",
   },
   {
-    name: "Books",
+    name: "books",
     image: "/assets/images/books.jpg",
   },
   {
-    name: "Movies",
+    name: "movies",
     image: "/assets/images/movies.jpg",
   },
   {
-    name: "Television",
+    name: "television",
     image: "/assets/images/television.jpg",
   },
   {
-    name: "Music",
+    name: "music",
     image: "/assets/images/music.jpg",
   },
   {
-    name: "Video Games",
+    name: "video games",
     image: "/assets/images/video-games.jpg",
   },
   {
-    name: "Science",
+    name: "science",
     image: "/assets/images/science.jpg",
   },
   {
-    name: "Computer",
+    name: "computer",
     image: "/assets/images/computer.jpg",
   },
   {
-    name: "Sports",
+    name: "sports",
     image: "/assets/images/sports.jpg",
   },
   {
-    name: "Celebrities",
+    name: "celebrities",
     image: "/assets/images/celebrities.jpg",
   },
   {
-    name: "History",
+    name: "history",
     image: "/assets/images/history.jpg",
   },
   {
-    name: "Vehicles",
+    name: "vehicles",
     image: "/assets/images/vehicles.jpg",
   },
 ];

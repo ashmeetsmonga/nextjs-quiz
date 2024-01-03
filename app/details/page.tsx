@@ -9,7 +9,7 @@ const Details = () => {
   const router = useRouter();
 
   const generateQuestions = () => {
-    getQuestions().then((data) => {
+    getQuestions(category, difficulty, noOfQuestions).then((data) => {
       setQuestions(data.results);
       router.push("/quiz");
     });
