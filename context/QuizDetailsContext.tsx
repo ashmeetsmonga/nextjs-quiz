@@ -1,4 +1,5 @@
 "use client";
+import { Question } from "@/app/quiz.types";
 import React, { createContext, useContext, useState } from "react";
 
 interface QuizDetailsContextProps {
@@ -8,6 +9,8 @@ interface QuizDetailsContextProps {
   setDifficulty: React.Dispatch<React.SetStateAction<string>>;
   noOfQuestions: number;
   setNoOfQuestions: React.Dispatch<React.SetStateAction<number>>;
+  questions: Question[];
+  setQuestions: React.Dispatch<React.SetStateAction<Question[]>>;
 }
 
 const quizDetailsContextDefaultValues: QuizDetailsContextProps = {
@@ -17,6 +20,8 @@ const quizDetailsContextDefaultValues: QuizDetailsContextProps = {
   setDifficulty: () => {},
   noOfQuestions: 10,
   setNoOfQuestions: () => {},
+  questions: [],
+  setQuestions: () => {},
 };
 
 const QuizDetailsContext = createContext<QuizDetailsContextProps>(quizDetailsContextDefaultValues);
@@ -29,8 +34,9 @@ const QuizDetailsContextProvider = ({ children }: { children: React.ReactNode })
   const [category, setCategory] = useState<string>("");
   const [difficulty, setDifficulty] = useState<string>("easy");
   const [noOfQuestions, setNoOfQuestions] = useState<number>(10);
+  const [questions, setQuestions] = useState<Question[]>([]);
 
-  return <QuizDetailsContext.Provider value={{ category, difficulty, noOfQuestions, setCategory, setDifficulty, setNoOfQuestions }}>{children}</QuizDetailsContext.Provider>;
+  return <QuizDetailsContext.Provider value={{ category, difficulty, noOfQuestions, setCategory, setDifficulty, setNoOfQuestions, questions, setQuestions }}>{children}</QuizDetailsContext.Provider>;
 };
 
 export default QuizDetailsContextProvider;

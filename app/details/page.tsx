@@ -1,11 +1,19 @@
 "use client";
 import { useQuizDetailsContext } from "@/context/QuizDetailsContext";
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
+import { getQuestions } from "../quiz.service";
+import { useRouter } from "next/navigation";
 
 const Details = () => {
-  const { category, difficulty, setDifficulty, noOfQuestions, setNoOfQuestions } = useQuizDetailsContext();
+  const { category, difficulty, setDifficulty, noOfQuestions, setNoOfQuestions, setQuestions } = useQuizDetailsContext();
+  const router = useRouter();
+
+  const generateQuestions = () => {
+    getQuestions().then((data) => {
+      setQuestions(data.results);
+      router.push("/quiz");
+    });
+  };
 
   return (
     <div className="w-full h-full flex justify-center items-center">
@@ -42,9 +50,9 @@ const Details = () => {
             </select>
           </div>
         </div>
-        <Link href="/quiz" className="flex justify-center">
-          <button className="bg-themeLight py-4 px-8 rounded-full text-xl font-bold text-themeDark hover:scale-105 hover:bg-themeOrange transition-all hover:text-themeLight">Start Quiz</button>
-        </Link>
+        <button onClick={generateQuestions} className="bg-themeLight py-4 px-8 rounded-full text-xl font-bold text-themeDark hover:scale-105 hover:bg-themeOrange transition-all hover:text-themeLight">
+          Start Quiz
+        </button>
       </div>
     </div>
   );

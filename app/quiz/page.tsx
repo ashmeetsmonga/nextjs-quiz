@@ -1,24 +1,52 @@
 "use client";
-import React, { useState } from "react";
-import { options } from "./quiz.constants";
+import React, { useEffect, useState } from "react";
 import Option from "./components/Option";
-import Timer from "./components/Timer";
+import { useQuizDetailsContext } from "@/context/QuizDetailsContext";
+import { DURATION } from "./quiz.constants";
 
 const Quiz = () => {
+  const [questionIdx, setQuestionIdx] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
+  const [duration, setDuration] = useState(DURATION);
+  const [isTimeExpired, setIsTimeExpired] = useState(false);
+
+  const { questions } = useQuizDetailsContext();
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setDuration((prev) => {
+        if (!prev) {
+          setIsTimeExpired(true);
+          return prev;
+        } else return prev - 10;
+      });
+    }, 10);
+    return () => window.clearInterval(interval);
+  }, []);
 
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="w-4/5 flex flex-col items-center gap-16">
-        <h1 className="text-4xl font-bold text-themeDark">Which of these mythological creatures is said to be half-man and half-horse?</h1>
+        <h1 className="text-4xl font-bold text-themeDark">{questions[questionIdx].question}</h1>
         <div className="w-full flex justify-center gap-10">
-          {options.map((option, idx) => (
+          {[...questions[questionIdx].incorrect_answers, questions[questionIdx].correct_answer].map((option, idx) => (
             <Option key={idx} name={option} isSelected={selectedAnswer === option} setSelectedAnswer={setSelectedAnswer} />
           ))}
         </div>
         <div className="relative w-full flex justify-center mt-20">
-          <button className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange  hover:text-themeLight hover:scale-110 transition-all ">Submit</button>
-          <Timer />
+          <button
+            onClick={() => setQuestionIdx((prev) => prev + 1)}
+            disabled={isTimeExpired}
+            className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange  hover:text-themeLight hover:scale-110 transition-all "
+          >
+            Submit
+          </button>
+          <div className="absolute top-10 w-full mt-20 flex flex-col items-end gap-4">
+            <div style={{ width: `${(duration * 100) / DURATION}%` }} className="h-4 rounded-full bg-themeOrange transition-all" />
+            <div>
+              <p className="text-3xl font-semibold text-themeOrange">{Math.ceil(duration / 1000)}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
