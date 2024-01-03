@@ -8,6 +8,7 @@ const Quiz = () => {
   const [questionIdx, setQuestionIdx] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [duration, setDuration] = useState(DURATION);
+  const [score, setScore] = useState(0);
 
   const { questions } = useQuizDetailsContext();
 
@@ -27,19 +28,24 @@ const Quiz = () => {
 
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <div className="w-4/5 flex flex-col items-center gap-16">
+      <div className="w-4/5 flex flex-col items-center gap-16 relative">
+        <div className="absolute -top-10 right-0 flex gap-2">
+          <p className="text-xl font-semibold text-themeDark">Score:</p>
+          <p className="text-xl font-bold text-themeOrange">{score}</p>
+        </div>
         <h1 className="text-4xl font-bold text-themeDark">
           {questionIdx + 1}. {questions[questionIdx].question}
         </h1>
         <div className="w-full flex justify-center gap-10">
           {[...questions[questionIdx].incorrect_answers, questions[questionIdx].correct_answer].map((option, idx) => (
-            <Option key={idx} name={option} isSelected={selectedAnswer === option} setSelectedAnswer={setSelectedAnswer} />
+            <Option disabled={duration === 0} key={idx} name={option} isSelected={selectedAnswer === option} setSelectedAnswer={setSelectedAnswer} />
           ))}
         </div>
         <div className="relative w-full flex justify-center mt-20">
           {duration !== 0 && (
             <button
               onClick={() => {
+                if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
                 setQuestionIdx((prev) => prev + 1);
                 setDuration(DURATION);
                 setSelectedAnswer("");
