@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from "react";
 import Option from "./components/Option";
 import { useQuizDetailsContext } from "@/context/QuizDetailsContext";
-import { DURATION } from "./quiz.constants";
+import { DURATION, entities } from "./quiz.constants";
+import he from "he";
 
 const Quiz = () => {
   const [questionIdx, setQuestionIdx] = useState(0);
@@ -29,16 +30,23 @@ const Quiz = () => {
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="w-4/5 flex flex-col items-center gap-16 relative">
-        <div className="absolute -top-10 right-0 flex gap-2">
+        <div className="absolute -top-20 right-0 flex gap-2">
           <p className="text-xl font-semibold text-themeDark">Score:</p>
           <p className="text-xl font-bold text-themeOrange">{score}</p>
         </div>
         <h1 className="text-4xl font-bold text-themeDark">
-          {questionIdx + 1}. {questions[questionIdx].question}
+          {questionIdx + 1}. {he.decode(questions[questionIdx].question)}
         </h1>
         <div className="w-full flex justify-center gap-10">
           {[...questions[questionIdx].incorrect_answers, questions[questionIdx].correct_answer].map((option, idx) => (
-            <Option disabled={duration === 0} key={idx} name={option} isSelected={selectedAnswer === option} setSelectedAnswer={setSelectedAnswer} />
+            <Option
+              disabled={duration === 0}
+              key={idx}
+              name={he.decode(option)}
+              isSelected={selectedAnswer === option}
+              setSelectedAnswer={setSelectedAnswer}
+              isCorrectAnswer={option === questions[questionIdx].correct_answer}
+            />
           ))}
         </div>
         <div className="relative w-full flex justify-center mt-20">
@@ -46,9 +54,12 @@ const Quiz = () => {
             <button
               onClick={() => {
                 if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
-                setQuestionIdx((prev) => prev + 1);
-                setDuration(DURATION);
-                setSelectedAnswer("");
+                setDuration(0);
+                window.setTimeout(() => {
+                  setQuestionIdx((prev) => prev + 1);
+                  setDuration(DURATION);
+                  setSelectedAnswer("");
+                }, 1000);
               }}
               disabled={selectedAnswer === ""}
               className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold enabled:hover:bg-themeOrange enabled:hover:text-themeLight enabled:hover:scale-110 transition-all disabled:cursor-not-allowed"
@@ -61,6 +72,7 @@ const Quiz = () => {
               onClick={() => {
                 setQuestionIdx((prev) => prev + 1);
                 setDuration(DURATION);
+                if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
                 setSelectedAnswer("");
               }}
               className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange hover:text-themeLight hover:scale-110 transition-all"
