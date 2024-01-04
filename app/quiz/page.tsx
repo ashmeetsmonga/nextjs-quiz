@@ -53,13 +53,7 @@ const Quiz = () => {
           {duration !== 0 && (
             <button
               onClick={() => {
-                if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
                 setDuration(0);
-                window.setTimeout(() => {
-                  setQuestionIdx((prev) => prev + 1);
-                  setDuration(DURATION);
-                  setSelectedAnswer("");
-                }, 1000);
               }}
               disabled={selectedAnswer === ""}
               className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold enabled:hover:bg-themeOrange enabled:hover:text-themeLight enabled:hover:scale-110 transition-all disabled:cursor-not-allowed"
@@ -70,9 +64,9 @@ const Quiz = () => {
           {duration === 0 && (
             <button
               onClick={() => {
+                if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
                 setQuestionIdx((prev) => prev + 1);
                 setDuration(DURATION);
-                if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
                 setSelectedAnswer("");
               }}
               className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange hover:text-themeLight hover:scale-110 transition-all"
