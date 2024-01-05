@@ -35,7 +35,7 @@ const Details = () => {
 
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <div className="w-1/4 flex flex-col gap-14 bg-themeLight p-10 rounded-lg">
+      <div className="w-[90%] md:w-3/5 lg:w-2/4 2xl:w-1/4 flex flex-col gap-14 bg-themeLight p-10 rounded-lg">
         <h1 className="text-themeDark text-4xl font-bold">Quiz Details</h1>
         <div className="flex flex-col gap-7">
           <div className="flex gap-3 flex-col">
