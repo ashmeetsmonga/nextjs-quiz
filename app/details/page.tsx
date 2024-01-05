@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { getQuestions } from "../quiz.service";
 import { useRouter } from "next/navigation";
 import Spinner from "../components/Spinner";
+import toast from "react-hot-toast";
+import { QuestionsAPI } from "../quiz.types";
 
 const Details = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,8 +16,19 @@ const Details = () => {
     setIsLoading(true);
     getQuestions(category, difficulty, noOfQuestions)
       .then((data) => {
-        setQuestions(data.results);
-        router.push("/quiz");
+        setQuestions(data?.results);
+        if (data.response_code === 0) router.push("/quiz");
+        else {
+          let message = "";
+          if (data.response_code === 1) message = "Please reduce the number of questions";
+          toast.error(message);
+        }
+      })
+      .catch((e: any) => {
+        const data: QuestionsAPI = e.response.data;
+        let message = "";
+        if (data.response_code === 5) message = "Too many requests, wait 5 secs before trying again";
+        toast.error(message);
       })
       .finally(() => setIsLoading(false));
   };
@@ -49,9 +62,9 @@ const Details = () => {
               className="text-themeOrange text-xl font-semibold outline-none border-none bg-white py-2 px-4 rounded-xl appearance-none cursor-pointer"
             >
               <option>5</option>
-              {/* <option>10</option>
+              <option>10</option>
               <option>15</option>
-              <option>20</option> */}
+              <option>20</option>
             </select>
           </div>
         </div>
