@@ -18,7 +18,7 @@ const quizDetailsContextDefaultValues: QuizDetailsContextProps = {
   setCategory: () => {},
   difficulty: "easy",
   setDifficulty: () => {},
-  noOfQuestions: 10,
+  noOfQuestions: 5,
   setNoOfQuestions: () => {},
   questions: [],
   setQuestions: () => {},
@@ -33,7 +33,7 @@ export function useQuizDetailsContext() {
 const QuizDetailsContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [category, setCategory] = useState<string>("");
   const [difficulty, setDifficulty] = useState<string>("easy");
-  const [noOfQuestions, setNoOfQuestions] = useState<number>(10);
+  const [noOfQuestions, setNoOfQuestions] = useState<number>(5);
   const [questions, setQuestions] = useState<Question[]>([]);
 
   return <QuizDetailsContext.Provider value={{ category, difficulty, noOfQuestions, setCategory, setDifficulty, setNoOfQuestions, questions, setQuestions }}>{children}</QuizDetailsContext.Provider>;

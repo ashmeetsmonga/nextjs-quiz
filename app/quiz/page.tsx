@@ -4,6 +4,7 @@ import Option from "./components/Option";
 import { useQuizDetailsContext } from "@/context/QuizDetailsContext";
 import { DURATION, entities } from "./quiz.constants";
 import he from "he";
+import { useRouter } from "next/navigation";
 
 const Quiz = () => {
   const [questionIdx, setQuestionIdx] = useState(0);
@@ -12,6 +13,7 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
 
   const { questions } = useQuizDetailsContext();
+  const router = useRouter();
 
   useEffect(() => {
     let interval: number;
@@ -62,17 +64,32 @@ const Quiz = () => {
             </button>
           )}
           {duration === 0 && (
-            <button
-              onClick={() => {
-                if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
-                setQuestionIdx((prev) => prev + 1);
-                setDuration(DURATION);
-                setSelectedAnswer("");
-              }}
-              className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange hover:text-themeLight hover:scale-110 transition-all"
-            >
-              Next Question
-            </button>
+            <>
+              {questionIdx < questions.length - 1 && (
+                <button
+                  onClick={() => {
+                    if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
+                    setQuestionIdx((prev) => prev + 1);
+                    setDuration(DURATION);
+                    setSelectedAnswer("");
+                  }}
+                  className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange hover:text-themeLight hover:scale-110 transition-all"
+                >
+                  Next Question
+                </button>
+              )}
+              {questionIdx === questions.length - 1 && (
+                <button
+                  onClick={() => {
+                    if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
+                    router.push("/result");
+                  }}
+                  className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange hover:text-themeLight hover:scale-110 transition-all"
+                >
+                  Finish Quiz
+                </button>
+              )}
+            </>
           )}
           <div className="absolute top-10 w-full mt-20 flex flex-col items-end gap-4">
             <div style={{ width: `${(duration * 100) / DURATION}%` }} className="h-4 rounded-full bg-themeOrange transition-all" />

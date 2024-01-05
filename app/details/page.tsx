@@ -43,7 +43,7 @@ const Details = () => {
               onChange={(e) => setNoOfQuestions(parseInt(e.target.value))}
               className="text-themeOrange text-xl font-semibold outline-none border-none bg-white py-2 px-4 rounded-xl appearance-none cursor-pointer"
             >
-              <option>10</option>
+              <option>5</option>
               {/* <option>10</option>
               <option>15</option>
               <option>20</option> */}
