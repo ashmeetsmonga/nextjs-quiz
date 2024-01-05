@@ -1,18 +1,23 @@
 "use client";
 import { useQuizDetailsContext } from "@/context/QuizDetailsContext";
-import React from "react";
+import React, { useState } from "react";
 import { getQuestions } from "../quiz.service";
 import { useRouter } from "next/navigation";
+import Spinner from "../components/Spinner";
 
 const Details = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { category, difficulty, setDifficulty, noOfQuestions, setNoOfQuestions, setQuestions } = useQuizDetailsContext();
   const router = useRouter();
 
   const generateQuestions = () => {
-    getQuestions(category, difficulty, noOfQuestions).then((data) => {
-      setQuestions(data.results);
-      router.push("/quiz");
-    });
+    setIsLoading(true);
+    getQuestions(category, difficulty, noOfQuestions)
+      .then((data) => {
+        setQuestions(data.results);
+        router.push("/quiz");
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -50,9 +55,19 @@ const Details = () => {
             </select>
           </div>
         </div>
-        <button onClick={generateQuestions} className="bg-themeLight py-4 px-8 rounded-full text-xl font-bold text-themeDark hover:scale-105 hover:bg-themeOrange transition-all hover:text-themeLight">
-          Start Quiz
-        </button>
+        {!isLoading && (
+          <button
+            onClick={generateQuestions}
+            className="bg-themeLight py-4 px-8 rounded-full text-xl font-bold text-themeDark hover:scale-105 hover:bg-themeOrange transition-all hover:text-themeLight"
+          >
+            Start Quiz
+          </button>
+        )}
+        {isLoading && (
+          <div className="w-full flex justify-center">
+            <Spinner />
+          </div>
+        )}
       </div>
     </div>
   );
