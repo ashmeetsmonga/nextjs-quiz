@@ -10,9 +10,8 @@ const Quiz = () => {
   const [questionIdx, setQuestionIdx] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [duration, setDuration] = useState(DURATION);
-  const [score, setScore] = useState(0);
 
-  const { questions } = useQuizDetailsContext();
+  const { questions, score, setScore } = useQuizDetailsContext();
   const router = useRouter();
 
   useEffect(() => {
