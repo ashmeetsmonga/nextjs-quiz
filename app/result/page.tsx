@@ -19,7 +19,7 @@ const Result = () => {
         </div>
         <button
           onClick={() => router.push("/")}
-          className="bg-themeLight py-4 px-8 rounded-full text-xl font-bold text-themeDark hover:scale-105 hover:bg-themeOrange transition-all hover:text-themeLight"
+          className="w-fit self-center px-8 py-4 bg-themeDark text-themeLight text-xl rounded-full font-semibold hover:bg-themeOrange hover:text-themeLight hover:scale-110 transition-all"
         >
           Play Again
         </button>

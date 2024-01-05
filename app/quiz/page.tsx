@@ -10,6 +10,7 @@ const Quiz = () => {
   const [questionIdx, setQuestionIdx] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [duration, setDuration] = useState(DURATION);
+  const [isSubmitPressed, setIsSubmitPressed] = useState(false);
 
   const { questions, score, setScore } = useQuizDetailsContext();
   const router = useRouter();
@@ -54,6 +55,8 @@ const Quiz = () => {
           {duration !== 0 && (
             <button
               onClick={() => {
+                if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
+                setIsSubmitPressed(true);
                 setDuration(0);
               }}
               disabled={selectedAnswer === ""}
@@ -67,9 +70,10 @@ const Quiz = () => {
               {questionIdx < questions.length - 1 && (
                 <button
                   onClick={() => {
-                    if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
+                    if (!isSubmitPressed && selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
                     setQuestionIdx((prev) => prev + 1);
                     setDuration(DURATION);
+                    setIsSubmitPressed(false);
                     setSelectedAnswer("");
                   }}
                   className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange hover:text-themeLight hover:scale-110 transition-all"
