@@ -30,16 +30,16 @@ const Quiz = () => {
   }, []);
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
+    <div className="w-full h-screen flex justify-center items-center">
       <div className="w-4/5 flex flex-col items-center gap-16 relative">
         <div className="absolute -top-20 right-0 flex gap-2">
           <p className="text-xl font-semibold text-themeDark">Score:</p>
           <p className="text-xl font-bold text-themeOrange">{score}</p>
         </div>
-        <h1 className="text-4xl font-bold text-themeDark">
+        <h1 className="text-2xl md:text-4xl font-bold text-themeDark">
           {questionIdx + 1}. {he.decode(questions[questionIdx].question)}
         </h1>
-        <div className="w-full flex justify-center gap-10">
+        <div className="w-full flex flex-col lg:flex-row justify-center gap-5 md:gap-10">
           {[...questions[questionIdx].incorrect_answers, questions[questionIdx].correct_answer].map((option, idx) => (
             <Option
               disabled={duration === 0}
@@ -51,7 +51,7 @@ const Quiz = () => {
             />
           ))}
         </div>
-        <div className="relative w-full flex justify-center mt-20">
+        <div className="relative w-full flex justify-center mt-10">
           {duration !== 0 && (
             <button
               onClick={() => {
@@ -60,7 +60,7 @@ const Quiz = () => {
                 setDuration(0);
               }}
               disabled={selectedAnswer === ""}
-              className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold enabled:hover:bg-themeOrange enabled:hover:text-themeLight enabled:hover:scale-110 transition-all disabled:cursor-not-allowed"
+              className="w-full lg:w-fit px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold enabled:hover:bg-themeOrange enabled:hover:text-themeLight enabled:hover:scale-110 transition-all disabled:cursor-not-allowed"
             >
               Submit
             </button>
@@ -76,7 +76,7 @@ const Quiz = () => {
                     setIsSubmitPressed(false);
                     setSelectedAnswer("");
                   }}
-                  className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange hover:text-themeLight hover:scale-110 transition-all"
+                  className="w-full lg:w-fit px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange hover:text-themeLight hover:scale-110 transition-all"
                 >
                   Next Question
                 </button>
@@ -87,7 +87,7 @@ const Quiz = () => {
                     if (selectedAnswer === questions[questionIdx].correct_answer) setScore((prev) => prev + 1);
                     router.push("/result");
                   }}
-                  className="px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange hover:text-themeLight hover:scale-110 transition-all"
+                  className="w-full lg:w-fit px-8 py-4 bg-themeLight text-themeDark text-xl rounded-full font-semibold hover:bg-themeOrange hover:text-themeLight hover:scale-110 transition-all"
                 >
                   Finish Quiz
                 </button>
