@@ -2,12 +2,14 @@
 import React, { useEffect, useState } from "react";
 import Option from "./components/Option";
 import { useQuizDetailsContext } from "@/context/QuizDetailsContext";
-import { DURATION, entities } from "./quiz.constants";
+import { DURATION } from "./quiz.constants";
 import he from "he";
 import { useRouter } from "next/navigation";
+import { shuffle } from "../utils";
 
 const Quiz = () => {
   const [questionIdx, setQuestionIdx] = useState(0);
+  const [options, setOptions] = useState<string[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [duration, setDuration] = useState(DURATION);
   const [isSubmitPressed, setIsSubmitPressed] = useState(false);
@@ -29,6 +31,10 @@ const Quiz = () => {
     return () => window.clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    setOptions(shuffle([...questions[questionIdx].incorrect_answers, questions[questionIdx].correct_answer]));
+  }, [questionIdx]);
+
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-4/5 flex flex-col items-center gap-16 relative">
@@ -40,16 +46,17 @@ const Quiz = () => {
           {questionIdx + 1}. {he.decode(questions[questionIdx].question)}
         </h1>
         <div className="w-full flex flex-col lg:flex-row justify-center gap-5 md:gap-10">
-          {[...questions[questionIdx].incorrect_answers, questions[questionIdx].correct_answer].map((option, idx) => (
-            <Option
-              disabled={duration === 0}
-              key={idx}
-              name={he.decode(option)}
-              isSelected={selectedAnswer === option}
-              setSelectedAnswer={setSelectedAnswer}
-              isCorrectAnswer={option === questions[questionIdx].correct_answer}
-            />
-          ))}
+          {options.length > 0 &&
+            options.map((option, idx) => (
+              <Option
+                disabled={duration === 0}
+                key={idx}
+                name={he.decode(option)}
+                isSelected={selectedAnswer === option}
+                setSelectedAnswer={setSelectedAnswer}
+                isCorrectAnswer={option === questions[questionIdx].correct_answer}
+              />
+            ))}
         </div>
         <div className="relative w-full flex justify-center mt-10">
           {duration !== 0 && (
