@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import { categories } from "./categories.constants";
 import Category from "./components/Category";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const Categories = () => {
   return (
