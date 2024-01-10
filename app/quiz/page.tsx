@@ -39,7 +39,7 @@ const Quiz = () => {
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-4/5 flex flex-col items-center gap-16 relative">
         <div className="absolute -top-20 right-0 flex gap-2">
-          <p className="text-xl font-semibold text-themeDark">Score:</p>
+          <p className="text-xl font-semibold text-themeDark">Score: </p>
           <p className="text-xl font-bold text-themeOrange">{score}</p>
         </div>
         <h1 className="text-2xl md:text-4xl font-bold text-themeDark">
